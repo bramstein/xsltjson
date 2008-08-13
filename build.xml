@@ -1,0 +1,42 @@
+<project name="XSLTJSON" default="transform">
+	<description>
+		Simple project to transform arbitrary XML files to JSON format.
+	</description>
+	
+	<property name="xsltjson.build" value="output"/>
+	<property name="xsltjson.lib" value="lib"/>
+	<property name="xsltjson.config" value="conf"/>
+	
+	<path id="xsltjson.classpath">
+		<fileset dir="${xsltjson.lib}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<mkdir dir="${xsltjson.build}"/>
+	</target>
+	
+	<target name="transform" depends="init">
+		<xslt basedir="input/examples" destdir="${xsltjson.build}/examples" extension=".json"
+		style="${xsltjson.config}/xml-to-json.xsl">
+			<classpath>
+				<path refid="xsltjson.classpath"/>
+			</classpath>
+		</xslt>
+
+	</target>
+
+	<target name="test" depends="init">
+		<xslt basedir="input/tests" destdir="${xsltjson.build}/tests" extension=".xml"
+		style="${xsltjson.config}/test.xsl">
+			<classpath>
+				<path refid="xsltjson.classpath"/>
+			</classpath>
+		</xslt>
+	</target>
+
+	<target name="clean">
+		<delete dir="${xsltjson.build}"/>
+	</target>
+</project>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+	<text>
+		This is a line.
+		
+		Another line.
+		
+		Here's a "quote" for you.
+	</text>
+	<text display="true">
+		This is a line.
+		
+		Another line.
+		
+		Here's a "quote" for you.
+	</text>
+	<numeric>
+		1289.0
+	</numeric>
+	<escaping>
+		\ / \ /
+		" " " "
+		' ' ' '
+		\\ \\ \\
+	</escaping>
+	<element-and-text>
+		Text here.
+		<element color="red">
+			This is an element.
+		</element>
+		And more text here.
+	</element-and-text>
+</test>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<test>
+    <prompt>What is 2+2</prompt>
+    <choice>1</choice>
+    <choice>3</choice>
+    <choice>4</choice>
+    <prompt>What is 10*10</prompt>
+    <choice>10</choice>
+    <choice>100</choice>
+    <choice>1000</choice>
+</test>

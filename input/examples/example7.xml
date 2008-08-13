@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<root xmlns="http://somedomain.org" xmlns:test="http://test.somedomain.org">
+	<list type="integer">
+		<test:entry>1</test:entry>
+		<test:entry>2</test:entry>
+		<test:entry>3</test:entry>
+		<test:entry sum="true">6</test:entry>
+	</list>
+</root>

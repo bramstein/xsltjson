@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<article>
+	<h1>Sample article</h1>
+	<section>
+		<p class="intro">This is a <em>sample</em> article.</p>
+	</section>
+</article>
