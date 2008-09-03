@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tests xmlns:json="http://json.org/">
+
+	<params>
+		<param name="use-rabbitfish">true</param>
+		<param name="use-badgerfish">false</param>
+		<param name="use-namespaces">false</param>
+	</params>
+
 	<test id="element-names">
 		<input>
 			<node-name/>

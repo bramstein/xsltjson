@@ -36,21 +36,23 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.6.
+	   XSLTJSON v0.7.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
 	   on how to pass parameters to a stylesheet.
 	   
-	   *debug 		-  Enable or disable the output of the temporary 
+	   * debug 		-  Enable or disable the output of the temporary 
 	   			   XML tree used to generate JSON output.
-	   *use-rabbitfish	-  Output basic JSON with a '@' to indicate XML
+	   * use-rabbitfish	-  Output basic JSON with a '@' to indicate XML
 	   			   attributes.
-	   *use-badgerfish	-  Use the BadgerFish (http://badgerfish.ning.com/)
+	   * use-badgerfish	-  Use the BadgerFish (http://badgerfish.ning.com/)
 	   			   convention to output JSON without XML namespaces.
-	   *use-namespaces	-  Output XML namespaces according to the
+	   * use-rayfish    - Use the RayFish (http://onperl.org/blog/onperl/page/rayfish)
+				   convention to output JSON without XML namespaces.
+	   * use-namespaces	-  Output XML namespaces according to the
 	   			   BadgerFish convention.
-	   *jsonp	    -  Enable JSONP; the JSON output will be prepended with 
+	   * jsonp	        -  Enable JSONP; the JSON output will be prepended with 
 				   the value of the jsonp parameter.
 
 	   Credits: 
@@ -60,6 +62,7 @@
 	<xsl:param name="use-rabbitfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-badgerfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-namespaces" as="xs:boolean" select="false()"/>
+	<xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="jsonp" as="xs:string" select="''"/>
 	
 	<!--
@@ -71,7 +74,7 @@
 		
 		<xsl:variable name="json-tree">
 			<json:object>
-				<xsl:copy-of select="json:create-node($input,false())"/>
+				<xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input)"/>
 			</json:object>
 		</xsl:variable>
 		
@@ -91,7 +94,7 @@
 				<xsl:when test="$debug">
 					<xsl:variable name="json-tree">
 						<json:object>
-							<xsl:copy-of select="json:create-node(.,false())"/>
+							<xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
 						</json:object>
 					</xsl:variable>
 							
@@ -113,9 +116,55 @@
 	<xsl:template name="json:build-tree">
 		<xsl:param name="input" as="node()"/>
 		<json:object>
-			<xsl:copy-of select="json:create-node($input,false())"/>
+			<xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input/child::node())"/>
 		</json:object>
-	</xsl:template>	
+	</xsl:template>
+
+	<xsl:function name="json:create-simple-node-member" as="node()">
+		<xsl:param name="type" as="xs:string"/>
+		<xsl:param name="value"/>
+		<json:member>
+			<json:name><xsl:value-of select="$type"/></json:name>
+			<json:value><xsl:copy-of select="$value"/></json:value>
+		</json:member>
+	</xsl:function>
+
+	<xsl:function name="json:create-simple-node" as="node()*">
+		<xsl:param name="node" as="node()"/>
+
+		<xsl:copy-of select="json:create-simple-node-member('#name', $node/local-name())"/>
+		<xsl:copy-of select="json:create-simple-node-member('#text', $node/child::text())"/>
+
+		<xsl:variable name="empty-array">
+			<json:array/>
+		</xsl:variable>	
+
+		<xsl:variable name="children">
+			<json:array>
+				<xsl:for-each select="$node/@*">
+					<json:array-value>
+						<json:value>
+							<json:object>
+								<xsl:copy-of select="json:create-simple-node-member('#name', concat('@',./local-name()))"/>
+								<xsl:copy-of select="json:create-simple-node-member('#text', string(.))"/>
+								<xsl:copy-of select="json:create-simple-node-member('#children', $empty-array)"/>
+							</json:object>
+						</json:value>
+					</json:array-value>
+				</xsl:for-each>
+				<xsl:for-each select="$node/child::element()">
+					<json:array-value>
+						<json:value>
+							<json:object>
+								<xsl:copy-of select="json:create-simple-node(.)"/>
+							</json:object>
+						</json:value>
+					</json:array-value>
+				</xsl:for-each>
+			</json:array>
+		</xsl:variable>			
+		<xsl:copy-of select="json:create-simple-node-member('#children', $children)"/>
+	</xsl:function>
 
 	<xsl:function name="json:create-node" as="node()">
 		<xsl:param name="node" as="node()"/>
@@ -185,7 +234,7 @@
 					<xsl:for-each-group select="$node/child::node()" group-adjacent="local-name()">
 						<xsl:choose>
 							<xsl:when test="count(current-group()) eq 1">
-								<xsl:copy-of select="json:create-node(current-group()[1],false())"/>
+								<xsl:copy-of select="json:create-node(current-group()[1], false())"/>
 							</xsl:when>
 							<xsl:otherwise>
 								<json:member>
