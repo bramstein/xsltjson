@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tests xmlns:json="http://json.org/">
+	<params>
+		<param name="use-rabbitfish">false</param>
+		<param name="use-badgerfish">true</param>
+		<param name="use-namespaces">false</param>
+	</params>
+
 	<test id="element-names">
 		<input>
 			<node-name/>
@@ -170,7 +176,14 @@
 									<json:object>
 										<json:member>
 											<json:name>a</json:name>
-											<json:value>0123456789</json:value>
+											<json:value>
+												<json:object>
+													<json:member>
+														<json:name>$</json:name>
+														<json:value>0123456789</json:value>
+													</json:member>
+												</json:object>		
+											</json:value>
 										</json:member>
 									</json:object>
 								</json:value>

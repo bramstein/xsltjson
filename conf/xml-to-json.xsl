@@ -36,30 +36,33 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.6.
+	   XSLTJSON v0.7.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
 	   on how to pass parameters to a stylesheet.
 	   
-	   *debug 		-  Enable or disable the output of the temporary 
+	   * debug 		-  Enable or disable the output of the temporary 
 	   			   XML tree used to generate JSON output.
-	   *use-rabbitfish	-  Output basic JSON with a '@' to indicate XML
+	   * use-rabbitfish	-  Output basic JSON with a '@' to indicate XML
 	   			   attributes.
-	   *use-badgerfish	-  Use the BadgerFish (http://badgerfish.ning.com/)
+	   * use-badgerfish	-  Use the BadgerFish (http://badgerfish.ning.com/)
 	   			   convention to output JSON without XML namespaces.
-	   *use-namespaces	-  Output XML namespaces according to the
+	   * use-rayfish    - Use the RayFish (http://onperl.org/blog/onperl/page/rayfish)
+				   convention to output JSON without XML namespaces.
+	   * use-namespaces	-  Output XML namespaces according to the
 	   			   BadgerFish convention.
-	   *jsonp	    -  Enable JSONP; the JSON output will be prepended with 
+	   * jsonp	        -  Enable JSONP; the JSON output will be prepended with 
 				   the value of the jsonp parameter.
 
 	   Credits: 
 		Chick Markley (chick@diglib.org) - Octal number & numbers with terminating period
 	-->
 	<xsl:param name="debug" as="xs:boolean" select="false()"/>
-	<xsl:param name="use-rabbitfish" as="xs:boolean" select="false()"/>
+	<xsl:param name="use-rabbitfish" as="xs:boolean" select="true()"/>
 	<xsl:param name="use-badgerfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-namespaces" as="xs:boolean" select="false()"/>
+	<xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="jsonp" as="xs:string" select="''"/>
 	
 	<!--
@@ -185,7 +188,7 @@
 					<xsl:for-each-group select="$node/child::node()" group-adjacent="local-name()">
 						<xsl:choose>
 							<xsl:when test="count(current-group()) eq 1">
-								<xsl:copy-of select="json:create-node(current-group()[1],false())"/>
+								<xsl:copy-of select="json:create-node(current-group()[1], false())"/>
 							</xsl:when>
 							<xsl:otherwise>
 								<json:member>
