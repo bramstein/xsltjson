@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tests xmlns:json="http://json.org/">
+
+	<params>
+		<param name="use-rayfish">true</param>
+	</params>
+
 	<test id="element-names">
 		<input>
 			<node-name/>
@@ -7,24 +12,17 @@
 		<output>
 			<json:object>
 				<json:member>
-					<json:name/>
+					<json:name>#name</json:name>
+					<json:value>node-name</json:value>
+				</json:member>
+				<json:member>
+					<json:name>#text</json:name>
+					<json:value/>
+				</json:member>
+				<json:member>
+					<json:name>#children</json:name>
 					<json:value>
-						<json:object>
-							<json:member>
-								<json:name>#name</json:name>
-								<json:value>node-name</json:value>
-							</json:member>
-							<json:member>
-								<json:name>#text</json:name>
-								<json:value/>
-							</json:member>
-							<json:member>
-								<json:name>#children</json:name>
-								<json:value>
-									<json:array/>
-								</json:value>
-							</json:member>
-						</json:object>
+						<json:array/>
 					</json:value>
 				</json:member>
 			</json:object>
@@ -38,24 +36,17 @@
 		<output>
 			<json:object>
 				<json:member>
-					<json:name/>
+					<json:name>#name</json:name>
+					<json:value>alice</json:value>
+				</json:member>
+				<json:member>
+					<json:name>#text</json:name>
+					<json:value>bob</json:value>
+				</json:member>
+				<json:member>
+					<json:name>#children</json:name>
 					<json:value>
-						<json:object>
-							<json:member>
-								<json:name>#name</json:name>
-								<json:value>alice</json:value>
-							</json:member>
-							<json:member>
-								<json:name>#text</json:name>
-								<json:value>bob</json:value>
-							</json:member>
-							<json:member>
-								<json:name>#children</json:name>
-								<json:value>
-									<json:array/>
-								</json:value>
-							</json:member>
-						</json:object>
+						<json:array/>
 					</json:value>
 				</json:member>
 			</json:object>
@@ -72,65 +63,58 @@
 		<output>
 			<json:object>
 				<json:member>
-					<json:name/>
+					<json:name>#name</json:name>
+					<json:value>alice</json:value>
+				</json:member>
+				<json:member>
+					<json:name>#text</json:name>
+					<json:value/>
+				</json:member>
+				<json:member>
+					<json:name>#children</json:name>
 					<json:value>
-						<json:object>
-							<json:member>
-								<json:name>#name</json:name>
-								<json:value>alice</json:value>
-							</json:member>
-							<json:member>
-								<json:name>#text</json:name>
-								<json:value/>
-							</json:member>
-							<json:member>
-								<json:name>#children</json:name>
+						<json:array>
+							<json:array-value>
 								<json:value>
-									<json:array>
-										<json:array-value>
+									<json:object>
+										<json:member>
+											<json:name>#name</json:name>
+											<json:value>bob</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#text</json:name>
+											<json:value>charlie</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#children</json:name>
 											<json:value>
-												<json:object>
-													<json:member>
-														<json:name>#name</json:name>
-														<json:value>bob</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#text</json:name>
-														<json:value>charlie</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#children</json:name>
-														<json:value>
-															<json:array/>
-														</json:value>
-													</json:member>
-												</json:object>
+												<json:array/>
 											</json:value>
-										</json:array-value>
-										<json:array-value>
-											<json:value>
-												<json:object>
-													<json:member>
-														<json:name>#name</json:name>
-														<json:value>david</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#text</json:name>
-														<json:value>edgar</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#children</json:name>
-														<json:value>
-															<json:array/>
-														</json:value>
-													</json:member>
-												</json:object>
-											</json:value>
-										</json:array-value>
-									</json:array>
+										</json:member>
+									</json:object>
 								</json:value>
-							</json:member>
-						</json:object>
+							</json:array-value>
+							<json:array-value>
+								<json:value>
+									<json:object>
+										<json:member>
+											<json:name>#name</json:name>
+											<json:value>david</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#text</json:name>
+											<json:value>edgar</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#children</json:name>
+											<json:value>
+												<json:array/>
+											</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:array-value>
+						</json:array>
 					</json:value>
 				</json:member>
 			</json:object>
@@ -147,65 +131,58 @@
 		<output>
 			<json:object>
 				<json:member>
-					<json:name/>
+					<json:name>#name</json:name>
+					<json:value>alice</json:value>
+				</json:member>
+				<json:member>
+					<json:name>#text</json:name>
+					<json:value/>
+				</json:member>
+				<json:member>
+					<json:name>#children</json:name>
 					<json:value>
-						<json:object>
-							<json:member>
-								<json:name>#name</json:name>
-								<json:value>alice</json:value>
-							</json:member>
-							<json:member>
-								<json:name>#text</json:name>
-								<json:value/>
-							</json:member>
-							<json:member>
-								<json:name>#children</json:name>
+						<json:array>
+							<json:array-value>
 								<json:value>
-									<json:array>
-										<json:array-value>
+									<json:object>
+										<json:member>
+											<json:name>#name</json:name>
+											<json:value>bob</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#text</json:name>
+											<json:value>charlie</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#children</json:name>
 											<json:value>
-												<json:object>
-													<json:member>
-														<json:name>#name</json:name>
-														<json:value>bob</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#text</json:name>
-														<json:value>charlie</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#children</json:name>
-														<json:value>
-															<json:array/>
-														</json:value>
-													</json:member>
-												</json:object>
+												<json:array/>
 											</json:value>
-										</json:array-value>
-										<json:array-value>
-											<json:value>
-												<json:object>
-													<json:member>
-														<json:name>#name</json:name>
-														<json:value>bob</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#text</json:name>
-														<json:value>david</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#children</json:name>
-														<json:value>
-															<json:array/>
-														</json:value>
-													</json:member>
-												</json:object>
-											</json:value>
-										</json:array-value>
-									</json:array>
+										</json:member>
+									</json:object>
 								</json:value>
-							</json:member>
-						</json:object>
+							</json:array-value>
+							<json:array-value>
+								<json:value>
+									<json:object>
+										<json:member>
+											<json:name>#name</json:name>
+											<json:value>bob</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#text</json:name>
+											<json:value>david</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#children</json:name>
+											<json:value>
+												<json:array/>
+											</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:array-value>
+						</json:array>
 					</json:value>
 				</json:member>
 			</json:object>
@@ -219,45 +196,38 @@
 		<output>	
 			<json:object>
 				<json:member>
-					<json:name/>
+					<json:name>#name</json:name>
+					<json:value>alice</json:value>
+				</json:member>
+				<json:member>
+					<json:name>#text</json:name>
+					<json:value>bob</json:value>
+				</json:member>
+				<json:member>
+					<json:name>#children</json:name>
 					<json:value>
-						<json:object>
-							<json:member>
-								<json:name>#name</json:name>
-								<json:value>alice</json:value>
-							</json:member>
-							<json:member>
-								<json:name>#text</json:name>
-								<json:value>bob</json:value>
-							</json:member>
-							<json:member>
-								<json:name>#children</json:name>
+						<json:array>
+							<json:array-value>
 								<json:value>
-									<json:array>
-										<json:array-value>
+									<json:object>
+										<json:member>
+											<json:name>#name</json:name>
+											<json:value>@charlie</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#text</json:name>
+											<json:value>david</json:value>
+										</json:member>
+										<json:member>
+											<json:name>#children</json:name>
 											<json:value>
-												<json:object>
-													<json:member>
-														<json:name>#name</json:name>
-														<json:value>@charlie</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#text</json:name>
-														<json:value>david</json:value>
-													</json:member>
-													<json:member>
-														<json:name>#children</json:name>
-														<json:value>
-															<json:array/>
-														</json:value>
-													</json:member>
-												</json:object>
+												<json:array/>
 											</json:value>
-										</json:array-value>
-									</json:array>
+										</json:member>
+									</json:object>
 								</json:value>
-							</json:member>
-						</json:object>
+							</json:array-value>
+						</json:array>
 					</json:value>
 				</json:member>
 			</json:object>
