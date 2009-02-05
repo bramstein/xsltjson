@@ -79,7 +79,14 @@
 		</xsl:variable>
 		
 		<xsl:variable name="output">
-			<xsl:value-of select="$jsonp"/><xsl:text>(</xsl:text><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text>)</xsl:text>
+			<xsl:choose>
+				<xsl:when test="empty($jsonp)">
+					</xsl:text><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$jsonp"/><xsl:text>(</xsl:text><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text>)</xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:variable>
 		
 		<xsl:sequence select="$output"/>
