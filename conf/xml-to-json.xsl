@@ -36,7 +36,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.7.
+	   XSLTJSON v0.8.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -54,9 +54,12 @@
 	   			   BadgerFish convention.
 	   * jsonp	        -  Enable JSONP; the JSON output will be prepended with 
 				   the value of the jsonp parameter.
+	   * skip-root - Skip the root XML element and concatenate the result with a 
+				   comma. Only available when JSONP is enabled.
 
 	   Credits: 
-		Chick Markley (chick@diglib.org) - Octal number & numbers with terminating period
+		Chick Markley (chick@diglib.org) - Octal number & numbers with terminating period.
+		Torben Schreiter (Torben.Schreiter@inubit.com) - Suggestions for skip root and node list.
 	-->
 	<xsl:param name="debug" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-rabbitfish" as="xs:boolean" select="false()"/>
@@ -64,18 +67,22 @@
 	<xsl:param name="use-namespaces" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="jsonp" as="xs:string" select="''"/>
+	<xsl:param name="skip-root" as="xs:boolean" select="false()"/>
 	
 	<!--
 		If you import or include the stylesheet in your own stylesheet you
 		can use this function to transform any XML node to JSON.
 	-->
 	<xsl:function name="json:generate" as="xs:string">
-		<xsl:param name="input" as="node()"/>
-		
+		<xsl:param name="input" as="node()*"/>	
 		<xsl:variable name="json-tree">
-			<json:object>
-				<xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input)"/>
-			</json:object>
+			<json:parameter>
+				<xsl:for-each select="$input">
+					<json:object>
+						<xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
+					</json:object>
+				</xsl:for-each>
+			</json:parameter>
 		</xsl:variable>
 		
 		<xsl:variable name="output">
@@ -109,9 +116,16 @@
 						<xsl:copy-of select="$json-tree"/>
 					</debug>
 					<xsl:apply-templates select="$json-tree" mode="json"/>
-				</xsl:when>		
+				</xsl:when>	
 				<xsl:otherwise>
-					<xsl:value-of select="json:generate(.)"/>
+					<xsl:choose>
+						<xsl:when test="normalize-space($jsonp) and $skip-root">
+							<xsl:value-of select="json:generate(./child::node())"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="json:generate(.)"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>	
 	</xsl:template>
@@ -357,11 +371,18 @@
 		These are output functions that transform the temporary tree
 		to JSON.
 	-->
+	<xsl:template match="json:parameter" mode="json">
+		<xsl:variable name="parameters"><xsl:apply-templates mode="json"/></xsl:variable>
+		<xsl:value-of select="string-join($parameters/parameter, ', ')"/>
+	</xsl:template>
+
 	<xsl:template match="json:object" mode="json">
 		<xsl:variable name="members"><xsl:apply-templates mode="json"/></xsl:variable>
-		<xsl:text/>{<xsl:text/>
-			<xsl:value-of select="string-join($members/member,',')"/> 
-		<xsl:text/>}<xsl:text/>
+		<parameter>
+			<xsl:text/>{<xsl:text/>
+				<xsl:value-of select="string-join($members/member,',')"/> 
+			<xsl:text/>}<xsl:text/>
+		</parameter>
 	</xsl:template>
 
 	<xsl:template match="json:member" mode="json">
