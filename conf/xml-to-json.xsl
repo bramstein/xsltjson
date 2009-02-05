@@ -5,7 +5,7 @@
 	xmlns:json="http://json.org/">
 	
 	<!--
-	   Copyright (c) 2006-2008, Bram Stein
+	   Copyright (c) 2006-2009, Bram Stein
 	   All rights reserved.
  
 	   Redistribution and use in source and binary forms, with or without 
@@ -80,11 +80,11 @@
 		
 		<xsl:variable name="output">
 			<xsl:choose>
-				<xsl:when test="empty($jsonp)">
-					</xsl:text><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text>
+				<xsl:when test="normalize-space($jsonp)">
+					<xsl:value-of select="$jsonp"/><xsl:text>(</xsl:text><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text>)</xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="$jsonp"/><xsl:text>(</xsl:text><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text>)</xsl:text>
+					<xsl:text/><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text/>					
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
