@@ -405,13 +405,19 @@
 					replace(
 					replace(
 					replace(
+					replace(
+					replace(
+					replace(
 					replace($string,
 						'\\','\\\\'),
 						'/', '\\/'),	
 						'&quot;', '\\&quot;'),
 						'&#xA;','\\n'),
 						'&#xD;','\\r'),
-						'&#x9;','\\t')"/>
+						'&#x9;','\\t'),
+						'\n','\\n'),
+						'\r','\\r'),
+						'\t','\\t')"/>
 	</xsl:function>
 	
 	<xsl:template match="json:name" mode="json">
