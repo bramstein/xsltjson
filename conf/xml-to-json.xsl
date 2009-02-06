@@ -36,7 +36,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.8.
+	   XSLTJSON v0.81.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -52,11 +52,9 @@
 				   convention to output JSON without XML namespaces.
 	   * use-namespaces	-  Output XML namespaces according to the
 	   			   BadgerFish convention.
-	   * skip-root		-  Skip the root XML element and wrap the result in an object.
+	   * skip-root		-  Skip the root XML element.
 	   * jsonp	        -  Enable JSONP; the JSON output will be prepended with 
-				   the value of the jsonp parameter.
-	   * jsonp-skip-root - Skip the root XML element and concatenate the result with a 
-				   comma. Only available when JSONP is enabled.
+				   the value of the jsonp parameter and wrapped in parentheses.
 
 	   Credits: 
 		Chick Markley (chick@diglib.org) - Octal number & numbers with terminating period.
@@ -68,7 +66,6 @@
 	<xsl:param name="use-namespaces" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="jsonp" as="xs:string" select="''"/>
-	<xsl:param name="jsonp-skip-root" as="xs:boolean" select="false()"/>
 	<xsl:param name="skip-root" as="xs:boolean" select="false()"/>
 	
 	<!--
@@ -76,41 +73,31 @@
 		can use this function to transform any XML node to JSON.
 	-->
 	<xsl:function name="json:generate" as="xs:string">
-		<xsl:param name="input" as="node()*"/>	
+		<xsl:param name="input" as="node()"/>	
 		<xsl:variable name="json-tree">
-			<xsl:choose>
-				<xsl:when test="$skip-root">
-					<!-- wrap the results in an unnamed root object -->
-					<json:object>
-						<xsl:for-each select="$input">
-							<xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
-						</xsl:for-each>
-					</json:object>
-				</xsl:when>
+			<json:object>
+				<xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input)"/>
+			</json:object>
+		</xsl:variable>
 
-				<!-- When we get here we've determined that we don't want to wrap the result
-					 in an invisible object. Since we might be skipping the root anyway, the
-					 only reasonable choice is to output JSONP parameter style.
-				-->
+		<xsl:variable name="json-mtree">
+			<xsl:choose>	
+				<xsl:when test="$skip-root">
+					<xsl:copy-of select="$json-tree/json:object/json:member/json:value/child::node()"/>
+				</xsl:when>
 				<xsl:otherwise>
-					<json:parameter>
-						<xsl:for-each select="$input">
-							<json:object>
-								<xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
-							</json:object>							
-						</xsl:for-each>
-					</json:parameter>
+					<xsl:copy-of select="$json-tree"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		
+
 		<xsl:variable name="output">
 			<xsl:choose>
 				<xsl:when test="normalize-space($jsonp)">
-					<xsl:value-of select="$jsonp"/><xsl:text>(</xsl:text><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text>)</xsl:text>
+					<xsl:value-of select="$jsonp"/><xsl:text>(</xsl:text><xsl:apply-templates select="$json-mtree" mode="json"/><xsl:text>)</xsl:text>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:text/><xsl:apply-templates select="$json-tree" mode="json"/><xsl:text/>					
+					<xsl:text/><xsl:apply-templates select="$json-mtree" mode="json"/><xsl:text/>					
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -137,14 +124,7 @@
 					<xsl:apply-templates select="$json-tree" mode="json"/>
 				</xsl:when>	
 				<xsl:otherwise>
-					<xsl:choose>
-						<xsl:when test="(normalize-space($jsonp) and $jsonp-skip-root) or $skip-root">
-							<xsl:value-of select="json:generate(./child::node())"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="json:generate(.)"/>
-						</xsl:otherwise>
-					</xsl:choose>
+					<xsl:value-of select="json:generate(.)"/>
 				</xsl:otherwise>
 			</xsl:choose>	
 	</xsl:template>
