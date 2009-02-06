@@ -48,13 +48,14 @@
 	   			   attributes.
 	   * use-badgerfish	-  Use the BadgerFish (http://badgerfish.ning.com/)
 	   			   convention to output JSON without XML namespaces.
-	   * use-rayfish    - Use the RayFish (http://onperl.org/blog/onperl/page/rayfish)
+	   * use-rayfish    -  Use the RayFish (http://onperl.org/blog/onperl/page/rayfish)
 				   convention to output JSON without XML namespaces.
 	   * use-namespaces	-  Output XML namespaces according to the
 	   			   BadgerFish convention.
+	   * skip-root		-  Skip the root XML element and wrap the result in an object.
 	   * jsonp	        -  Enable JSONP; the JSON output will be prepended with 
 				   the value of the jsonp parameter.
-	   * skip-root - Skip the root XML element and concatenate the result with a 
+	   * jsonp-skip-root - Skip the root XML element and concatenate the result with a 
 				   comma. Only available when JSONP is enabled.
 
 	   Credits: 
@@ -67,6 +68,7 @@
 	<xsl:param name="use-namespaces" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
 	<xsl:param name="jsonp" as="xs:string" select="''"/>
+	<xsl:param name="jsonp-skip-root" as="xs:boolean" select="false()"/>
 	<xsl:param name="skip-root" as="xs:boolean" select="false()"/>
 	
 	<!--
@@ -76,13 +78,30 @@
 	<xsl:function name="json:generate" as="xs:string">
 		<xsl:param name="input" as="node()*"/>	
 		<xsl:variable name="json-tree">
-			<json:parameter>
-				<xsl:for-each select="$input">
+			<xsl:choose>
+				<xsl:when test="$skip-root">
+					<!-- wrap the results in an unnamed root object -->
 					<json:object>
-						<xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
+						<xsl:for-each select="$input">
+							<xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
+						</xsl:for-each>
 					</json:object>
-				</xsl:for-each>
-			</json:parameter>
+				</xsl:when>
+
+				<!-- When we get here we've determined that we don't want to wrap the result
+					 in an invisible object. Since we might be skipping the root anyway, the
+					 only reasonable choice is to output JSONP parameter style.
+				-->
+				<xsl:otherwise>
+					<json:parameter>
+						<xsl:for-each select="$input">
+							<json:object>
+								<xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
+							</json:object>							
+						</xsl:for-each>
+					</json:parameter>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:variable>
 		
 		<xsl:variable name="output">
@@ -119,7 +138,7 @@
 				</xsl:when>	
 				<xsl:otherwise>
 					<xsl:choose>
-						<xsl:when test="normalize-space($jsonp) and $skip-root">
+						<xsl:when test="(normalize-space($jsonp) and $jsonp-skip-root) or $skip-root">
 							<xsl:value-of select="json:generate(./child::node())"/>
 						</xsl:when>
 						<xsl:otherwise>
