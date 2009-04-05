@@ -36,7 +36,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.82.
+	   XSLTJSON v0.83.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -431,7 +431,7 @@
 			</xsl:when>
 			<xsl:when test="text()">
 				<xsl:choose>
-					<xsl:when test="string(number(.)) = 'NaN' or ends-with(.,'.') or starts-with(.,'0')">
+					<xsl:when test="string(number(.)) = 'NaN' or ends-with(.,'.') or starts-with(.,'0') and not(. eq '0')">
 						<xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
 					</xsl:when>
 					<xsl:otherwise>
