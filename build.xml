@@ -33,7 +33,7 @@
 	</target>
 
 	<target name="examples-xalan">
-		<xslt basedir="input/jsonml" destdir="${xsltjson.build}/jsonml" extension=".json"
+		<xslt basedir="input/jsonml" destdir="${xsltjson.build}/examples" extension=".json"
 		style="${xsltjson.config}/xml-to-jsonml.xsl">
 			<classpath>
 				<path refid="xalan.classpath"/>
@@ -41,6 +41,7 @@
 		</xslt>
 	</target>
 
+<!--
 	<target name="test" depends="init">
 		<xslt basedir="input/tests" destdir="${xsltjson.build}/tests" extension=".xml"
 		style="${xsltjson.config}/test.xsl">
@@ -49,7 +50,7 @@
 			</classpath>
 		</xslt>
 	</target>
-
+-->
 	<target name="test-xalan" depends="init">
 	</target>
 
