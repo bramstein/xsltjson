@@ -56,7 +56,7 @@
 		<xsl:text>]</xsl:text>
 	</xsl:template>
 
-	<xsl:template match="text()">
+	<xsl:template match="text()" priority="10">
 		<xsl:call-template name="encode-value">
 			<xsl:with-param name="value" select="."/>
 		</xsl:call-template>

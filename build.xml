@@ -36,7 +36,7 @@
 		<xslt basedir="input/examples" destdir="${xsltjson.build}/examples" extension=".json"
 		style="${xsltjson.config}/xml-to-jsonml.xsl">
 			<classpath>
-				<path refid="xalan.classpath"/>
+				<path refid="saxon.classpath"/>
 			</classpath>
 		</xslt>
 	</target>
