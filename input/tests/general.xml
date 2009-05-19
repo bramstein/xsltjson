@@ -7,42 +7,6 @@
 		<param name="use-namespaces">false</param>
 	</params>
 
-	<test id="force-array">
-		<input>
-			<root>
-				<element json:force-array="true">hello world</element>
-			</root>
-		</input>
-		<output>
-			<json:object>
-				<json:member>
-					<json:name/>
-					<json:value>
-						<json:object>
-							<json:member>
-								<json:name>root</json:name>
-								<json:value>
-									<json:object>
-										<json:member>
-											<json:name>element</json:name>
-											<json:value>
-												<json:array>
-													<json:array-value>
-														<json:value>hello world</json:value>
-													</json:array-value>
-												</json:array>
-											</json:value>
-										</json:member>
-									</json:object>
-								</json:value>
-							</json:member>
-						</json:object>
-					</json:value>
-				</json:member>
-			</json:object>			
-		</output>
-	</test>
-
 	<test id="element-names">
 		<input>
 			<node-name/>
