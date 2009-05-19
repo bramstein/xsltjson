@@ -1,0 +1,10 @@
+<root>
+	<set>
+		<record>one</record>
+	</set>
+	<set>
+		<record>one</record>
+		<record>two</record>
+		<record>three</record>
+	</set>
+</root>

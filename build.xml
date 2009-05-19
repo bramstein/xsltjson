@@ -33,7 +33,7 @@
 	</target>
 
 	<target name="examples-xalan">
-		<xslt basedir="input/jsonml" destdir="${xsltjson.build}/examples" extension=".json"
+		<xslt basedir="input/examples" destdir="${xsltjson.build}/examples" extension=".json"
 		style="${xsltjson.config}/xml-to-jsonml.xsl">
 			<classpath>
 				<path refid="xalan.classpath"/>
