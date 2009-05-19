@@ -388,16 +388,6 @@
 		<xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
 	</xsl:template>
 	
-	<xsl:function name="json:encode-number" as="xs:string">
-		<xsl:param name="string" as="xs:string"/>
-		<xsl:sequence select="replace(
-					replace(
-					replace($string,
-						'&#xA;',''),
-						'&#xD;',''),
-						'&#x9;','')"/>
-	</xsl:function>
-	
 	<xsl:function name="json:encode-string" as="xs:string">
 		<xsl:param name="string" as="xs:string"/>
 		<xsl:sequence select="replace(
@@ -431,11 +421,11 @@
 			</xsl:when>
 			<xsl:when test="text()">
 				<xsl:choose>
-					<xsl:when test="string(number(.)) = 'NaN' or ends-with(.,'.') or starts-with(.,'0') and not(. eq '0')">
+					<xsl:when test="(string(number(.)) = 'NaN' or ends-with(.,'.') or starts-with(.,'0') and not(. eq '0')) and not(. eq 'false') and not(. = 'true') and not(. = 'null')">
 						<xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:text/><xsl:value-of select="json:encode-number(.)"/><xsl:text/>
+						<xsl:text/><xsl:value-of select="."/><xsl:text/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>

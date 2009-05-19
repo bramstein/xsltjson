@@ -1,0 +1,9 @@
+<root>
+	<string>hello world</string>
+	<number>12435</number>
+	<yes>true</yes>
+	<no>false</no>
+	<nil>null</nil>
+	<octal>0131</octal>
+	<float>1.3486712</float>
+</root>
