@@ -1,4 +1,4 @@
-<project name="XSLTJSON" default="transform">
+<project name="XSLTJSON" default="examples">
 	<description>
 		Simple project to transform arbitrary XML files to JSON format.
 	</description>
@@ -7,33 +7,50 @@
 	<property name="xsltjson.lib" value="lib"/>
 	<property name="xsltjson.config" value="conf"/>
 	
-	<path id="xsltjson.classpath">
-		<fileset dir="${xsltjson.lib}">
+	<path id="saxon.classpath">
+		<fileset dir="${xsltjson.lib}/saxon">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
-	
+
+	<path id="xalan.classpath">
+		<fileset dir="${xsltjson.lib}/xalan">
+			<include name="*.jar"/>
+		</fileset>
+	</path>	
+
 	<target name="init">
 		<mkdir dir="${xsltjson.build}"/>
 	</target>
 	
-	<target name="transform" depends="init">
+	<target name="examples" depends="init">
 		<xslt basedir="input/examples" destdir="${xsltjson.build}/examples" extension=".json"
 		style="${xsltjson.config}/xml-to-json.xsl">
 			<classpath>
-				<path refid="xsltjson.classpath"/>
+				<path refid="saxon.classpath"/>
 			</classpath>
 		</xslt>
+	</target>
 
+	<target name="examples-xalan">
+		<xslt basedir="input/jsonml" destdir="${xsltjson.build}/jsonml" extension=".json"
+		style="${xsltjson.config}/xml-to-jsonml.xsl">
+			<classpath>
+				<path refid="xalan.classpath"/>
+			</classpath>
+		</xslt>
 	</target>
 
 	<target name="test" depends="init">
 		<xslt basedir="input/tests" destdir="${xsltjson.build}/tests" extension=".xml"
 		style="${xsltjson.config}/test.xsl">
 			<classpath>
-				<path refid="xsltjson.classpath"/>
+				<path refid="saxon.classpath"/>
 			</classpath>
 		</xslt>
+	</target>
+
+	<target name="test-xalan" depends="init">
 	</target>
 
 	<target name="clean">
