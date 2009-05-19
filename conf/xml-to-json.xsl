@@ -3,40 +3,12 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:json="http://json.org/">
-	
-	<!--
-	   Copyright (c) 2006-2009, Bram Stein
-	   All rights reserved.
- 
-	   Redistribution and use in source and binary forms, with or without 
-	   modification, are permitted provided that the following conditions 
-	   are met:
- 
-	   1. Redistributions of source code must retain the above copyright
-	      notice, this list of conditions and the following disclaimer. 
- 	   2. Redistributions in binary form must reproduce the above copyright 
-	      notice, this list of conditions and the following disclaimer in the 
-	      documentation and/or other materials provided with the distribution. 
-	   3. The name of the author may not be used to endorse or promote products 
-	      derived from this software without specific prior written permission. 
-  
-	   THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED 
-	   WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
-	   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO 
-	   EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-	   INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-	   BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
-	   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY 
-	   OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-	   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
-	   EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- 	-->
 
 	<xsl:output indent="no" omit-xml-declaration="yes" method="text" encoding="utf-8"/>
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.84.
+	   XSLTJSON v0.85.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -59,6 +31,11 @@
 	   Credits: 
 		Chick Markley (chick@diglib.org) - Octal number & numbers with terminating period.
 		Torben Schreiter (Torben.Schreiter@inubit.com) - Suggestions for skip root and node list.
+
+	   Copyright:
+           	2006-2009, Bram Stein
+	   	Licensed under the new BSD License.
+	   	All rights reserved.
 	-->
 	<xsl:param name="debug" as="xs:boolean" select="false()"/>
 	<xsl:param name="use-rabbitfish" as="xs:boolean" select="false()"/>
@@ -421,7 +398,7 @@
 			</xsl:when>
 			<xsl:when test="text()">
 				<xsl:choose>
-					<xsl:when test="(string(number(.)) = 'NaN' or ends-with(.,'.') or starts-with(.,'0') and not(. eq '0')) and not(. eq 'false') and not(. = 'true') and not(. = 'null')">
+					<xsl:when test="(string(number(.)) = 'NaN' or ends-with(.,'.') or starts-with(.,'0') and not(. eq '0')) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
 						<xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
 					</xsl:when>
 					<xsl:otherwise>
