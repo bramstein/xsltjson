@@ -41,7 +41,7 @@
 		</xslt>
 	</target>
 
-<!--
+
 	<target name="test" depends="init">
 		<xslt basedir="input/tests" destdir="${xsltjson.build}/tests" extension=".xml"
 		style="${xsltjson.config}/test.xsl">
@@ -50,10 +50,10 @@
 			</classpath>
 		</xslt>
 	</target>
--->
+<!--
 	<target name="test-xalan" depends="init">
 	</target>
-
+-->
 	<target name="clean">
 		<delete dir="${xsltjson.build}"/>
 	</target>
