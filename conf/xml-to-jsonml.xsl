@@ -15,14 +15,13 @@
 
 	<json:search name="string">
 		<json:replace src="\" dst="\\"/>
-		<json:replace src="/" dst="\\/"/>
-		<json:replace src="&quot;" dst="\\&quot;"/>
-		<json:replace src="&#xA;" dst="\\n"/>
-		<json:replace src="&#xD;" dst="\\r"/>
-		<json:replace src="&#x9;" dst="\\t"/>
-		<json:replace src="\n" dst="\\n"/>
-		<json:replace src="\r" dst="\\r"/>
-		<json:replace src="\t" dst="\\t"/>
+		<json:replace src="&quot;" dst="\&quot;"/>
+		<json:replace src="&#xA;" dst="\n"/>
+		<json:replace src="&#xD;" dst="\r"/>
+		<json:replace src="&#x9;" dst="\t"/>
+		<json:replace src="\n" dst="\n"/>
+		<json:replace src="\r" dst="\r"/>
+		<json:replace src="\t" dst="\t"/>
 	</json:search>
 
 	<xsl:template match="node()">
