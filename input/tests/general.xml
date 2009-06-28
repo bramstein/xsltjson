@@ -44,9 +44,97 @@
 				</json:member>
 			</json:object>			
 		</output>
-
 	</test>
 
+	<test id="force-array-siblings">
+		<input>
+			<root>
+				<list json:force-array="true">item</list>
+				<object>something else</object>
+			</root>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>root</json:name>
+								<json:value>
+									<json:object>
+
+										<json:member>
+											<json:name>list</json:name>
+											<json:value>
+												<json:array>
+													<json:array-value>
+														<json:value>item</json:value>
+													</json:array-value>
+												</json:array>
+
+											</json:value>
+										</json:member>
+										<json:member>
+											<json:name>object</json:name>
+											<json:value>something else</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>				
+			</json:object>
+		</output>
+	</test>
+	
+	<test id="list-and-other">
+		<input>
+			<root>
+				<list>item one</list>
+				<list>item two</list>
+				<object>something else</object>
+			</root>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>root</json:name>
+								<json:value>
+									<json:object>
+
+										<json:member>
+											<json:name>list</json:name>
+											<json:value>
+												<json:array>
+													<json:array-value>
+														<json:value>item one</json:value>
+													</json:array-value>
+													<json:array-value>
+														<json:value>item two</json:value>
+													</json:array-value>
+												</json:array>
+
+											</json:value>
+										</json:member>
+										<json:member>
+											<json:name>object</json:name>
+											<json:value>something else</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>				
+			</json:object>
+		</output>
+	</test>
 
 	<test id="element-names">
 		<input>

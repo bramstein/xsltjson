@@ -1,0 +1,5 @@
+<root>
+	<list json:force-array="true" xmlns:json="http://json.org/">element-0</list>
+	<object>not-a-list</object>
+	<aobject>test</aobject>
+</root>

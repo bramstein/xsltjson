@@ -8,7 +8,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.86.
+	   XSLTJSON v0.87.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -31,6 +31,7 @@
 	   Credits: 
 		Chick Markley (chick@diglib.org) - Octal number & numbers with terminating period.
 		Torben Schreiter (Torben.Schreiter@inubit.com) - Suggestions for skip root and node list.
+		Michael Nilsson - Bug report and unit tests for json:force-array feature.
 
 	   Copyright:
            	2006-2009, Bram Stein
@@ -230,7 +231,7 @@
 					<xsl:copy-of select="json:create-attributes($node)"/>	
 					<xsl:for-each-group select="$node/child::node()" group-adjacent="local-name()">
 						<xsl:choose>
-							<xsl:when test="count(current-group()) eq 1 and (not(exists($node/child::node()/@json:force-array)) or $node/child::node()/@json:force-array eq 'false')">
+							<xsl:when test="count(current-group()) eq 1 and (not(exists(./@json:force-array)) or ./@json:force-array eq 'false')">
 								<xsl:copy-of select="json:create-node(current-group()[1], false())"/>
 							</xsl:when>
 							<xsl:otherwise>
