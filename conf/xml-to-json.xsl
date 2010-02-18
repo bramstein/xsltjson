@@ -8,7 +8,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.87.
+	   XSLTJSON v0.88.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -32,9 +32,10 @@
 		Chick Markley (chick@diglib.org) - Octal number & numbers with terminating period.
 		Torben Schreiter (Torben.Schreiter@inubit.com) - Suggestions for skip root and node list.
 		Michael Nilsson - Bug report and unit tests for json:force-array feature.
+        Frank Schwichtenberg - Namespace prefix name bug.
 
 	   Copyright:
-           	2006-2009, Bram Stein
+           	2006-2010, Bram Stein
 	   	Licensed under the new BSD License.
 	   	All rights reserved.
 	-->
@@ -327,11 +328,11 @@
 							<xsl:for-each select="$node/namespace::*">
 								<json:member>
 									<xsl:choose>
-										<xsl:when test="prefix-from-QName(node-name($node)) eq ''">
+										<xsl:when test="local-name(.) eq ''">
 											<json:name>$</json:name>
 										</xsl:when>
 										<xsl:otherwise>
-											<json:name><xsl:value-of select="prefix-from-QName(node-name($node))"/></json:name>
+											<json:name><xsl:value-of select="local-name(.)"/></json:name>
 										</xsl:otherwise>
 									</xsl:choose>
 									<json:value><xsl:value-of select="."/></json:value>

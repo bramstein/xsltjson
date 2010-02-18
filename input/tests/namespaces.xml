@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tests xmlns:json="http://json.org/">
+
+	<params>
+		<param name="use-badgerfish">true</param>
+		<param name="use-namespaces">true</param>
+	</params>
+
+	<test id="element-names">
+		<!-- This should return the top level namespaces (XML, json) and the newly declared unnamed default namespace (bramstein.com). -->
+		<input>
+			<root xmlns="http://www.bramstein.com/"/>
+		</input>
+		<output>
+            <json:object>
+               <json:member>
+                  <json:name/>
+                  <json:value>
+                     <json:object>
+                        <json:member>
+                           <json:name>root</json:name>
+                           <json:value>
+                              <json:object>
+                                 <json:member>
+                                    <json:name>@xmlns</json:name>
+                                    <json:value>
+                                       <json:object>
+                                          <json:member>
+                                             <json:name>xml</json:name>
+                                             <json:value>http://www.w3.org/XML/1998/namespace</json:value>
+                                          </json:member>
+                                          <json:member>
+                                             <json:name>$</json:name>
+                                             <json:value>http://www.bramstein.com/</json:value>
+                                          </json:member>
+                                          <json:member>
+                                             <json:name>json</json:name>
+                                             <json:value>http://json.org/</json:value>
+                                          </json:member>
+                                       </json:object>
+                                    </json:value>
+                                 </json:member>
+                              </json:object>
+                           </json:value>
+                        </json:member>
+                     </json:object>
+                  </json:value>
+               </json:member>
+            </json:object>
+		</output>
+	</test>
+</tests>
