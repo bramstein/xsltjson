@@ -8,7 +8,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.88.
+	   XSLTJSON v0.89.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -33,6 +33,7 @@
 		Torben Schreiter (Torben.Schreiter@inubit.com) - Suggestions for skip root and node list.
 		Michael Nilsson - Bug report and unit tests for json:force-array feature.
         Frank Schwichtenberg - Namespace prefix name bug.
+        Wilson Cheung - Bug report and fix for invalid number serialization.
 
 	   Copyright:
            	2006-2010, Bram Stein
@@ -400,7 +401,13 @@
 			</xsl:when>
 			<xsl:when test="text()">
 				<xsl:choose>
-					<xsl:when test="(string(number(.)) = 'NaN' or ends-with(.,'.') or starts-with(.,'0') and not(. eq '0')) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
+                    <!--
+                        A value is considered a string if the following conditions are met:
+                         * There is whitespace/formatting around the value of the node.
+                         * The value is not a valid JSON number (i.e. '01', '1.' are not valid JSON numbers.)
+                         * The value does not equal the any of the following strings: 'false', 'true', 'null'.
+                    -->
+					<xsl:when test="normalize-space(.) ne . or (string(number(.)) = 'NaN' or ends-with(., '.') or starts-with(., '0') and not(. eq '0')) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
 						<xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
 					</xsl:when>
 					<xsl:otherwise>

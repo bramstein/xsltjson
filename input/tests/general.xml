@@ -325,4 +325,41 @@
 			</json:object>
 		</output>
 	</test>
+
+    <test id="bad-number">
+        <input>
+            <root>1.<child>text</child></root>
+        </input>
+        <output>
+            <json:object>
+                <json:member>
+                    <json:name/>
+                    <json:value>
+                        <json:object>
+                            <json:member>
+                               <json:name>root</json:name>
+                               <json:value>
+                                  <json:array>
+                                     <json:array-value>
+                                        <json:value>1.</json:value>
+                                     </json:array-value>
+                                     <json:array-value>
+                                        <json:value>
+                                           <json:object>
+                                              <json:member>
+                                                 <json:name>child</json:name>
+                                                 <json:value>text</json:value>
+                                              </json:member>
+                                           </json:object>
+                                        </json:value>
+                                     </json:array-value>
+                                  </json:array>
+                               </json:value>
+                            </json:member>
+                         </json:object>
+                    </json:value>
+                </json:member>
+            </json:object>
+        </output>
+    </test>
 </tests>

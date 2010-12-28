@@ -1,0 +1,8 @@
+<root>1.
+    <child>text</child>
+    <test>1.</test>
+    <test2>1</test2>
+    <test3>
+        1
+    </test3>
+</root>
