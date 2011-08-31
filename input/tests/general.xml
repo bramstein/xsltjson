@@ -362,4 +362,46 @@
             </json:object>
         </output>
     </test>
+    
+    <test id="floating-point">
+        <input>
+            <root>0.4</root>
+        </input>
+        <output>
+            <json:object>
+                <json:member>
+                    <json:name/>
+                    <json:value>
+                        <json:object>
+                            <json:member>
+                               <json:name>root</json:name>
+                               <json:value>0.4</json:value>
+                            </json:member>
+                         </json:object>
+                    </json:value>
+                </json:member>
+            </json:object>
+        </output>
+    </test>
+
+    <test id="type-conversion">
+        <input>
+            <root>864D</root>
+        </input>
+        <output>
+            <json:object>
+                <json:member>
+                    <json:name/>
+                    <json:value>
+                        <json:object>
+                            <json:member>
+                               <json:name>root</json:name>
+                               <json:value>864D</json:value>
+                            </json:member>
+                         </json:object>
+                    </json:value>
+                </json:member>
+            </json:object>
+        </output>
+    </test>
 </tests>
