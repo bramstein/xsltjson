@@ -8,7 +8,7 @@
 	<xsl:strip-space elements="*"/>
 
 	<!--
-	   XSLTJSON v0.89.
+	   XSLTJSON v0.90.
 	
 	   You can use these parameters to control the output by supplying them to 
 	   stylesheet. Consult the manual of your XSLT processor for instructions 
@@ -34,9 +34,10 @@
 		Michael Nilsson - Bug report and unit tests for json:force-array feature.
         Frank Schwichtenberg - Namespace prefix name bug.
         Wilson Cheung - Bug report and fix for invalid number serialization.
+        Danny Cohn - Bug report and fix for invalid floating point number serialization.
 
 	   Copyright:
-           	2006-2010, Bram Stein
+           	2006-2011, Bram Stein
 	   	Licensed under the new BSD License.
 	   	All rights reserved.
 	-->
@@ -53,7 +54,8 @@
 		can use this function to transform any XML node to JSON.
 	-->
 	<xsl:function name="json:generate" as="xs:string">
-		<xsl:param name="input" as="node()"/>	
+		<xsl:param name="input" as="node()"/>
+	
 		<xsl:variable name="json-tree">
 			<json:object>
 				<xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input)"/>
@@ -407,7 +409,7 @@
                          * The value is not a valid JSON number (i.e. '01', '1.' are not valid JSON numbers.)
                          * The value does not equal the any of the following strings: 'false', 'true', 'null'.
                     -->
-					<xsl:when test="normalize-space(.) ne . or (string(number(.)) = 'NaN' or ends-with(., '.') or starts-with(., '0') and not(. eq '0')) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
+					<xsl:when test="normalize-space(.) ne . or (string(number(.)) = 'NaN' or ends-with(., '.') or (starts-with(., '0') and not(. eq '0') and not(contains(., '.')))) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
 						<xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
 					</xsl:when>
 					<xsl:otherwise>
