@@ -410,7 +410,7 @@
                * The value is not a valid JSON number (i.e. '01', '1.' are not valid JSON numbers.)
                * The value does not equal the any of the following strings: 'false', 'true', 'null'.
           -->
-          <xsl:when test="normalize-space(.) ne . or (string(number(.)) = 'NaN' or ends-with(., '.') or (starts-with(., '0') and not(. eq '0') and not(contains(., '.')))) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
+          <xsl:when test="normalize-space(.) ne . or not((string(.) castable as xs:integer and not(starts-with(string(.),'0') and not(. = '0'))) or (string(.) castable as xs:decimal and not(starts-with(.,'-.')) and not(starts-with(.,'-0') and not(starts-with(.,'-0.'))) and not(ends-with(.,'.')) and not(starts-with(.,'0') and not(starts-with(.,'0.'))) )) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
             <xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
           </xsl:when>
           <xsl:otherwise>

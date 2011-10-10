@@ -5,4 +5,23 @@
     <test3>
         1
     </test3>
+    <decimal>27.0</decimal>
+    <decimal>0.4</decimal>
+    <decimal>4.2</decimal>
+    <decimal>-0.4</decimal>
+    <string>864D</string>
+    <string>danny.</string>
+    <string>0.4f</string>
+    <string>0.</string>
+    <string>07684</string>
+    <string>00.4</string>
+    <string>-.4</string>
+    <string>-00.4</string>
+    <integer>-0</integer>
+    <integer>0</integer>
+    <integer>357304038526476</integer>
+    <integer>8901650907001019363</integer>
+    <boolean>true</boolean>
+    <boolean>false</boolean>
+    <null>null</null>
 </root>
