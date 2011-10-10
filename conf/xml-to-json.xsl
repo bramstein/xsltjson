@@ -8,7 +8,7 @@
   <xsl:strip-space elements="*"/>
 
   <!--
-     XSLTJSON v0.90.
+     XSLTJSON v0.91.
 
      You can use these parameters to control the output by supplying them to
      stylesheet. Consult the manual of your XSLT processor for instructions
