@@ -1,10 +1,10 @@
-# XSLTJSON, XML to JSON using XSLT
+# XSLTJSON
 
-## Introduction
+## Transforming XML to JSON using XSLT
 
-XSLTJSON is an XSLT 2.0 stylesheet to transform arbitrary XML to [JavaScript Object Notation](http://json.org/) ( JSON ). JSON is a lightweight data-interchange format based on a subset of the [JavaScript language](http://en.wikipedia.org/wiki/JavaScript), and often offered as an alternative to XML in—for example—web services. To make life easier XSLTJSON allows you to transform XML to JSON automatically.
+XSLTJSON is an XSLT 2.0 stylesheet to transform arbitrary XML to [JavaScript Object Notation](http://json.org/) (JSON). JSON is a lightweight data-interchange format based on a subset of the [JavaScript language](http://en.wikipedia.org/wiki/JavaScript), and often offered as an alternative to XML in—for example—web services. To make life easier XSLTJSON allows you to transform XML to JSON automatically.
 
-XSLTJSON supports several different JSON output formats, from a compact output format to support for the [BadgerFish convention](http://badgerfish.ning.com/) , which allows round-trips between XML and JSON . To make things even better, it is completely free and open-source. If you do not have an XSLT 2.0 processor, you can use XSLTJSON Lite, which is an XSLT 1.0 stylesheet to transforms XML to the [JSONML format](http://jsonml.org/).
+XSLTJSON supports several different JSON output formats, from a compact output format to support for the [BadgerFish convention](http://badgerfish.ning.com/), which allows round-trips between XML and JSON. To make things even better, it is completely free and open-source. If you do not have an XSLT 2.0 processor, you can use XSLTJSON Lite, which is an XSLT 1.0 stylesheet to transforms XML to the [JSONML format](http://jsonml.org/).
 
 ## Usage
 
@@ -215,4 +215,4 @@ Don't have an XSLT 2.0 processor? Check out [Alan Lewis](http://alanlewis.typepa
 
 ## Credits
 
-Thanks to: Chick Markley (Octal number &amp; numbers with terminating period fix), Torben Schreiter (Suggestions for skip root, and newline entities bug fix), Michael Nilsson (Bug report &amp; text cases for json:force-array.)
+Thanks to: Chick Markley (Octal number & numbers with terminating period fix), Torben Schreiter (Suggestions for skip root, and newline entities bug fix), Michael Nilsson (Bug report & text cases for json:force-array.)
