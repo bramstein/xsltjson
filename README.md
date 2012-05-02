@@ -1,6 +1,4 @@
-# XSLTJSON
-
-## Transforming XML to JSON using XSLT
+## XSLTJSON: Transforming XML to JSON using XSLT
 
 XSLTJSON is an XSLT 2.0 stylesheet to transform arbitrary XML to [JavaScript Object Notation](http://json.org/) (JSON). JSON is a lightweight data-interchange format based on a subset of the [JavaScript language](http://en.wikipedia.org/wiki/JavaScript), and often offered as an alternative to XML in—for example—web services. To make life easier XSLTJSON allows you to transform XML to JSON automatically.
 
