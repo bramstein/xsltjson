@@ -209,7 +209,7 @@ XSLTJSON requires an XSLT 2.0 processor. An excellent option is [Saxon](http://w
 
 ## XSLT 2.0?
 
-Don't have an XSLT 2.0 processor? Check out [Micheal Matthew's Rayfish project](http://onperl.org/blog/onperl/page/rayfish), [xml2json](http://code.google.com/p/xml2json-xslt/), or a modified [xml2json version by Martynas Jusevičius](http://www.xml.lt/Blog/2009/01/21/XML+to+JSON). You can also use [XSLTJSON Lite](xsltjson-lite) to transform XML to JSONML.
+Don't have an XSLT 2.0 processor? Check out [Micheal Matthew's Rayfish project](http://onperl.org/blog/onperl/page/rayfish), [xml2json](http://code.google.com/p/xml2json-xslt/), or a modified [xml2json version by Martynas Jusevičius](http://www.xml.lt/Blog/2009/01/21/XML+to+JSON). You can also use [XSLTJSON Lite](conf/xml-to-jsonml.xsl) to transform XML to JSONML.
 
 ## Credits
 
