@@ -29,7 +29,7 @@ You can also call the stylesheet programmatically, but this depends heavily on y
 
 ### Parameters
 
-There are five Boolean parameters to control the stylesheet, and all are turned off by default (set to `false()`.) You can control them from the command line, from your program or from another stylesheet. Four of the parameters are used to control the output format and are discussed in more detail in the section on [output formats](output-formats).
+There are five Boolean parameters to control the stylesheet, and all are turned off by default (set to `false()`.) You can control them from the command line, from your program or from another stylesheet. Four of the parameters are used to control the output format and are discussed in more detail in the section on output formats.
 
 * `use-badgerfish` — Use the [BadgerFish](http://badgerfish.ning.com/) convention to output JSON *without* XML namespaces.
 * `use-rabbitfish` — Output basic JSON with an `@` to mark XML attributes.
@@ -201,7 +201,7 @@ When turned on, namespaces are created according to the [BadgerFish convention](
 
 ## XSLTJSON Lite (XSLT 1.0 compatible)
 
-The [XSLTJSON Lite stylesheet](xml-to-jsonml.xsl) transforms arbitrary XML to the [JSONML format](http://jsonml.org/). It is written in XSLT 1.0, so it is compatible with all XSLT 1.0 and 2.0 processors, as well as the XSLT processor built into most modern browsers (for client-side transformations.) The stylesheet doesn't take any parameters and has no configurable options. Use it like you would use any XSLT stylesheet.
+The [XSLTJSON Lite stylesheet](conf/xml-to-jsonml.xsl) transforms arbitrary XML to the [JSONML format](http://jsonml.org/). It is written in XSLT 1.0, so it is compatible with all XSLT 1.0 and 2.0 processors, as well as the XSLT processor built into most modern browsers (for client-side transformations.) The stylesheet doesn't take any parameters and has no configurable options. Use it like you would use any XSLT stylesheet.
 
 ## Requirements
 
