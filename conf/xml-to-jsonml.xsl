@@ -117,7 +117,7 @@
 	<xsl:template name="encode-value">
 		<xsl:param name="value"/>
 		<xsl:choose>
-			<xsl:when test="(normalize-space($value) ne $value or string(number($value)) = 'NaN' or (substring($value , string-length($value), 1) = '.') or (substring($value, 1, 1) = '0') and not($value = '0')) and not($value = 'false') and not($value = 'true') and not($value = 'null')">
+			<xsl:when test="(normalize-space($value) != $value or string(number($value)) = 'NaN' or (substring($value , string-length($value), 1) = '.') or (substring($value, 1, 1) = '0') and not($value = '0')) and not($value = 'false') and not($value = 'true') and not($value = 'null')">
 				<xsl:text>"</xsl:text>
 				<xsl:call-template name="encode">
 					<xsl:with-param name="input" select="$value"/>
