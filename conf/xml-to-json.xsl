@@ -8,7 +8,7 @@
   <xsl:strip-space elements="*"/>
 
   <!--
-     XSLTJSON v0.91.
+     XSLTJSON v1.0.92.
 
      You can use these parameters to control the output by supplying them to
      stylesheet. Consult the manual of your XSLT processor for instructions
@@ -37,7 +37,7 @@
        Danny Cohn - Bug report and fix for invalid floating point number serialization.
 
      Copyright:
-      2006-2011, Bram Stein
+      2006-2013, Bram Stein
 
       Licensed under the new BSD License.
       All rights reserved.
@@ -407,10 +407,10 @@
           <!--
               A value is considered a string if the following conditions are met:
                * There is whitespace/formatting around the value of the node.
-               * The value is not a valid JSON number (i.e. '01', '1.' are not valid JSON numbers.)
+               * The value is not a valid JSON number (i.e. '01', '1.', and '.5' are not valid JSON numbers.)
                * The value does not equal the any of the following strings: 'false', 'true', 'null'.
           -->
-          <xsl:when test="normalize-space(.) ne . or not((string(.) castable as xs:integer and not(starts-with(string(.),'0') and not(. = '0'))) or (string(.) castable as xs:decimal and not(starts-with(.,'-.')) and not(starts-with(.,'-0') and not(starts-with(.,'-0.'))) and not(ends-with(.,'.')) and not(starts-with(.,'0') and not(starts-with(.,'0.'))) )) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
+          <xsl:when test="normalize-space(.) ne . or not((string(.) castable as xs:integer and not(starts-with(string(.),'0') and not(. = '0'))) or (string(.) castable as xs:decimal and not(starts-with(.,'-.')) and not(starts-with(.,'.')) and not(starts-with(.,'-0') and not(starts-with(.,'-0.'))) and not(ends-with(.,'.')) and not(starts-with(.,'0') and not(starts-with(.,'0.'))) )) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
             <xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
           </xsl:when>
           <xsl:otherwise>
