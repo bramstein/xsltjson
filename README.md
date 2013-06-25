@@ -211,6 +211,10 @@ XSLTJSON requires an XSLT 2.0 processor. An excellent option is [Saxon](http://w
 
 Don't have an XSLT 2.0 processor? Check out [Micheal Matthew's Rayfish project](http://onperl.org/blog/onperl/page/rayfish), [xml2json](http://code.google.com/p/xml2json-xslt/), or a modified [xml2json version by Martynas Jusevičius](http://www.xml.lt/Blog/2009/01/21/XML+to+JSON). You can also use [XSLTJSON Lite](conf/xml-to-jsonml.xsl) to transform XML to JSONML.
 
+## License
+
+XSLTJSON is licensed under the new BSD License (see the header comment.)
+
 ## Credits
 
 Thanks to: Chick Markley (Octal number & numbers with terminating period fix), Torben Schreiter (Suggestions for skip root, and newline entities bug fix), Michael Nilsson (Bug report & text cases for json:force-array.)
