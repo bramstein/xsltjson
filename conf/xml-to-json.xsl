@@ -8,7 +8,7 @@
   <xsl:strip-space elements="*"/>
 
   <!--
-     XSLTJSON v1.0.92.
+     XSLTJSON v1.0.93.
 
      You can use these parameters to control the output by supplying them to
      stylesheet. Consult the manual of your XSLT processor for instructions
@@ -37,7 +37,7 @@
        Danny Cohn - Bug report and fix for invalid floating point number serialization.
 
      Copyright:
-      2006-2013, Bram Stein
+      2006-2014, Bram Stein
 
       Licensed under the new BSD License.
       All rights reserved.
