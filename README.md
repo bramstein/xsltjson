@@ -217,4 +217,4 @@ XSLTJSON is licensed under the new BSD License (see the header comment.)
 
 ## Credits
 
-Thanks to: Chick Markley (Octal number & numbers with terminating period fix), Torben Schreiter (Suggestions for skip root, and newline entities bug fix), Michael Nilsson (Bug report & text cases for json:force-array.)
+Thanks to: Chick Markley (Octal number & numbers with terminating period fix), Torben Schreiter (Suggestions for skip root, and newline entities bug fix), Michael Nilsson (Bug report & text cases for json:force-array), Rick Brown (bug report and fix for numbers starting with '+' symbol).
