@@ -7,6 +7,36 @@
 		<param name="use-namespaces">false</param>
 	</params>
 
+	<test id="force-string">
+			<input>
+				<root>
+					<element json:force-string="true">1234</element>
+				</root>
+			</input>
+			<output>
+				<json:object>
+					<json:member>
+						<json:name/>
+						<json:value>
+							<json:object>
+								<json:member>
+									<json:name>root</json:name>
+									<json:value>
+										<json:object>
+											<json:member>
+												<json:name>element</json:name>
+												<json:value json:force-string="true">1234</json:value>
+											</json:member>
+										</json:object>
+									</json:value>
+								</json:member>
+							</json:object>
+						</json:value>
+					</json:member>
+				</json:object>			
+			</output>
+	</test>
+
 	<test id="force-array">
 		<input>
 			<root>

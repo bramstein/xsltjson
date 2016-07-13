@@ -184,6 +184,7 @@
         <json:member>
           <xsl:copy-of select="json:create-string($node)"/>
           <json:value>
+            <xsl:copy-of select="$node/@json:force-string" />
             <xsl:copy-of select="json:create-children($node)"/>
           </json:value>
         </json:member>
@@ -196,7 +197,7 @@
     <xsl:choose>
       <xsl:when test="exists($node/child::text()) and count($node/child::node()) eq 1">
         <xsl:choose>
-          <xsl:when test="(count($node/namespace::*) gt 0 and $use-namespaces) or count($node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]) gt 0">
+          <xsl:when test="(count($node/namespace::*) gt 0 and $use-namespaces) or count($node/@*[(not(../@json:force-array) or count(.|../@json:force-array)=2) and (not(../@json:force-string) or count(.|../@json:force-string)=2)]) gt 0">
             <json:object>
               <xsl:copy-of select="json:create-namespaces($node)"/>
               <xsl:copy-of select="json:create-attributes($node)"/>
@@ -313,7 +314,7 @@
 
   <xsl:function name="json:create-attributes" as="node()*">
     <xsl:param name="node" as="node()"/>
-    <xsl:for-each select="$node/@*[not(../@json:force-array) or count(.|../@json:force-array)=2]">
+    <xsl:for-each select="$node/@*[(not(../@json:force-array) or count(.|../@json:force-array)=2)]">
       <json:member>
         <json:name><xsl:if test="$use-badgerfish or $use-rabbitfish">@</xsl:if><xsl:value-of select="if($use-namespaces) then name() else local-name()"/></json:name>
         <json:value><xsl:value-of select="."/></json:value>
@@ -410,7 +411,7 @@
                * The value is not a valid JSON number (i.e. '01', '+1', '1.', and '.5' are not valid JSON numbers.)
                * The value does not equal the any of the following strings: 'false', 'true', 'null'.
           -->
-          <xsl:when test="normalize-space(.) ne . or not((string(.) castable as xs:integer  and not(starts-with(string(.),'+')) and not(starts-with(string(.),'0') and not(. = '0'))) or (string(.) castable as xs:decimal  and not(starts-with(string(.),'+')) and not(starts-with(.,'-.')) and not(starts-with(.,'.')) and not(starts-with(.,'-0') and not(starts-with(.,'-0.'))) and not(ends-with(.,'.')) and not(starts-with(.,'0') and not(starts-with(.,'0.'))) )) and not(. = 'false') and not(. = 'true') and not(. = 'null')">
+          <xsl:when test="./@json:force-string eq 'true' or ((normalize-space(.) ne . or not((string(.) castable as xs:integer  and not(starts-with(string(.),'+')) and not(starts-with(string(.),'0') and not(. = '0'))) or (string(.) castable as xs:decimal  and not(starts-with(string(.),'+')) and not(starts-with(.,'-.')) and not(starts-with(.,'.')) and not(starts-with(.,'-0') and not(starts-with(.,'-0.'))) and not(ends-with(.,'.')) and not(starts-with(.,'0') and not(starts-with(.,'0.'))) )) and not(. = 'false') and not(. = 'true') and not(. = 'null')))">
             <xsl:text/>"<xsl:value-of select="json:encode-string(.)"/>"<xsl:text/>
           </xsl:when>
           <xsl:otherwise>
