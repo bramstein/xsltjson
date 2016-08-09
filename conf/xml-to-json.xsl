@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="2.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:json="http://json.org/">
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:json="http://json.org/">
 
   <xsl:output indent="no" omit-xml-declaration="yes" method="text" encoding="utf-8"/>
   <xsl:strip-space elements="*"/>
@@ -93,23 +93,23 @@
     be used on the command line.
   -->
   <xsl:template match="/*">
-      <xsl:choose>
-        <xsl:when test="$debug">
-          <xsl:variable name="json-tree">
-            <json:object>
-              <xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
-            </json:object>
-          </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$debug">
+        <xsl:variable name="json-tree">
+          <json:object>
+            <xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
+          </json:object>
+        </xsl:variable>
 
-          <debug>
-            <xsl:copy-of select="$json-tree"/>
-          </debug>
-          <xsl:apply-templates select="$json-tree" mode="json"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="json:generate(.)"/>
-        </xsl:otherwise>
-      </xsl:choose>
+        <debug>
+          <xsl:copy-of select="$json-tree"/>
+        </debug>
+        <xsl:apply-templates select="$json-tree" mode="json"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="json:generate(.)"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!--
@@ -176,6 +176,7 @@
       <xsl:when test="$in-array">
         <json:array-value>
           <json:value>
+            <xsl:copy-of select="$node/@json:force-array" />
             <xsl:copy-of select="json:create-children($node)"/>
           </json:value>
         </json:array-value>
@@ -219,7 +220,7 @@
               <xsl:copy-of select="json:create-namespaces($node)"/>
               <xsl:copy-of select="json:create-attributes($node)"/>
               <json:member>
-                <json:name>$</json:name>
+                <json:name>$d</json:name>
                 <json:value>
                   <xsl:copy-of select="json:create-mixed-array($node)"/>
                 </json:value>
@@ -363,7 +364,7 @@
     <xsl:variable name="members"><xsl:apply-templates mode="json"/></xsl:variable>
     <parameter>
       <xsl:text/>{<xsl:text/>
-        <xsl:value-of select="string-join($members/member,',')"/>
+      <xsl:value-of select="string-join($members/member,',')"/>
       <xsl:text/>}<xsl:text/>
     </parameter>
   </xsl:template>
@@ -420,7 +421,13 @@
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text/>null<xsl:text/>
+        <xsl:choose>
+          <xsl:when test="./@json:force-array eq 'true'">
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text/>null<xsl:text/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -434,7 +441,7 @@
       <xsl:apply-templates mode="json"/>
     </xsl:variable>
     <xsl:text/>[<xsl:text/>
-      <xsl:value-of select="string-join($values/value,',')"/>
+    <xsl:value-of select="string-join($values/value,',')"/>
     <xsl:text/>]<xsl:text/>
   </xsl:template>
 </xsl:stylesheet>
