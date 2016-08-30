@@ -59,6 +59,14 @@ You can force the creation of an array by adding the `force-array` parameter to 
 
 The `force-array` attribute will not be copied to the output JSON .
 
+You can force the creation of a string by adding the `force-string` parameter to your XML. So instead of creating a number, the following example will create a string.
+
+    <fruitId json:force-string="true" xmlns:json="http://json.org/">123</>
+    
+    {fruitId: '123'}
+
+The `force-string` attribute will not be copied to the output JSON .
+
 ### Output formats
 
 There are four output formats in XSLTJSON, which one to use depends on your target application. If you want the most compact JSON, use the basic output. If you want to transform XML to JSON and JSON back to XML, use the [BadgerFish](http://badgerfish.ning.com/) output. If you want something in between, you could use the RabbitFish output; which is similar to the basic version, but does distinguish between elements and attributes. If you're dealing with a lot of data centric XML, you could use the highly structured Rayfish output. All four output formats ignore XML namespaces unless the `use-namespaces` parameter is set to `true()`, in which case namespaces are created according to the BadgerFish convention.
