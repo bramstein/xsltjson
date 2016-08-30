@@ -441,7 +441,7 @@
       <xsl:apply-templates mode="json"/>
     </xsl:variable>
     <xsl:text/>[<xsl:text/>
-    <xsl:value-of select="string-join($values/value,',')"/>
+    <xsl:value-of select="string-join($values/value[node()],',')"/>
     <xsl:text/>]<xsl:text/>
   </xsl:template>
 </xsl:stylesheet>
