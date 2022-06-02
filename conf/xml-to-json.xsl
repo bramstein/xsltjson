@@ -49,6 +49,8 @@
   <xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
   <xsl:param name="jsonp" as="xs:string" select="''"/>
   <xsl:param name="skip-root" as="xs:boolean" select="false()"/>
+  <xsl:param name="ignore-comments" as="xs:boolean" select="false()"/>
+  <xsl:param name="ignore-null-fields" as="xs:boolean" select="false()"/>
 
   <!--
     If you import or include the stylesheet in your own stylesheet you
@@ -57,9 +59,13 @@
   <xsl:function name="json:generate" as="xs:string">
     <xsl:param name="input" as="node()"/>
 
+    <xsl:variable name="xml">
+      <xsl:copy-of select="if (not($ignore-comments)) then $input else json:remove-comment($input)"/>
+    </xsl:variable>
+
     <xsl:variable name="json-tree">
       <json:object>
-        <xsl:copy-of select="if (not($use-rayfish)) then json:create-node($input, false()) else json:create-simple-node($input)"/>
+        <xsl:copy-of select="if (not($use-rayfish)) then json:create-node($xml/child::node(), false()) else json:create-simple-node($xml/child::node())"/>
       </json:object>
     </xsl:variable>
 
@@ -93,11 +99,15 @@
     be used on the command line.
   -->
   <xsl:template match="/*">
+      <xsl:variable name="xml">
+        <xsl:copy-of select="if (not($ignore-comments)) then . else json:remove-comment(.)"/>
+      </xsl:variable>
+
       <xsl:choose>
         <xsl:when test="$debug">
           <xsl:variable name="json-tree">
             <json:object>
-              <xsl:copy-of select="if (not($use-rayfish)) then json:create-node(., false()) else json:create-simple-node(.)"/>
+              <xsl:copy-of select="if (not($use-rayfish)) then json:create-node($xml/child::node(), false()) else json:create-simple-node($xml/child::node())"/>
             </json:object>
           </xsl:variable>
 
@@ -107,7 +117,7 @@
           <xsl:apply-templates select="$json-tree" mode="json"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="json:generate(.)"/>
+          <xsl:value-of select="json:generate($xml)"/>
         </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -116,6 +126,14 @@
     All methods below are private methods and should not be used
     standalone.
   -->
+  <xsl:function name="json:remove-comment">
+    <xsl:param name="input" as="node()" />
+    <xsl:variable name="commentless-xml">
+      <xsl:apply-templates select="$input" mode="xml" />
+    </xsl:variable>
+    <xsl:copy-of select="$commentless-xml" />
+  </xsl:function>
+
   <xsl:template name="json:build-tree">
     <xsl:param name="input" as="node()"/>
     <json:object>
@@ -350,6 +368,18 @@
   </xsl:function>
 
   <!--
+    These are input functions that ignore XML comments when
+    option turned on.
+  -->
+  <xsl:template match="comment()" mode="xml">
+  </xsl:template>
+  <xsl:template match="/ | * | text() | @* | processing-instruction()" mode="xml">
+    <xsl:copy>
+      <xsl:apply-templates select="* | text() | @* | processing-instruction()" mode="xml" />
+    </xsl:copy>
+  </xsl:template>
+
+  <!--
     These are output functions that transform the temporary tree
     to JSON.
   -->
@@ -368,7 +398,16 @@
   </xsl:template>
 
   <xsl:template match="json:member" mode="json">
-    <xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
+    <xsl:choose>
+      <xsl:when test="$ignore-null-fields">
+        <xsl:if test="not(current()/*[name() = 'json:value'] = '')">
+          <xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:function name="json:encode-string" as="xs:string">
