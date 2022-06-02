@@ -49,7 +49,8 @@
   <xsl:param name="use-rayfish" as="xs:boolean" select="false()"/>
   <xsl:param name="jsonp" as="xs:string" select="''"/>
   <xsl:param name="skip-root" as="xs:boolean" select="false()"/>
-  <xsl:param name="ignore-comments" as="xs:boolean" select="true()"/>
+  <xsl:param name="ignore-comments" as="xs:boolean" select="false()"/>
+  <xsl:param name="ignore-null-fields" as="xs:boolean" select="false()"/>
 
   <!--
     If you import or include the stylesheet in your own stylesheet you
@@ -397,7 +398,16 @@
   </xsl:template>
 
   <xsl:template match="json:member" mode="json">
-    <xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
+    <xsl:choose>
+      <xsl:when test="$ignore-null-fields">
+        <xsl:if test="not(current()/*[name() = 'json:value'] = '')">
+          <xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text/><member><xsl:apply-templates mode="json"/></member><xsl:text/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:function name="json:encode-string" as="xs:string">
